@@ -45,6 +45,8 @@ public class MetaDescription {
 		
 		driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
 		
+		System.out.println("Page link : " + url);
+		
 		List<WebElement> metaTag = driver.findElements(By.tagName("meta"));
 		
 		System.out.println("Total Meta Tags : " + metaTag.size());
@@ -59,6 +61,8 @@ public class MetaDescription {
 			
 			if(mDescription == null || mDescription.isEmpty())
 			{
+				System.out.println("Metadescription : " + mDescription);
+				
 				count++;
 			}
 			else
@@ -76,6 +80,96 @@ public class MetaDescription {
 		
 		
 	}
+	
+	 @Test
+	public void employeeCommunication()
+	{
+		String url = "https://www.empuls.io/employee-communication-networking-app";
+		
+		driver.get(url);
+		
+		driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
+		
+		System.out.println("Page link : " + url);
+		
+		List<WebElement> metaTag = driver.findElements(By.tagName("meta"));
+		
+		System.out.println("Total Meta Tags : " + metaTag.size());
+		
+		int count = 0;
+		
+		String mDescription;
+		
+		for(WebElement metadescription : metaTag)
+		{
+			mDescription = metadescription.getAttribute("content");
+			
+			if(mDescription == null || mDescription.isEmpty())
+			{
+				System.out.println("Metadescription : " + mDescription);
+			
+				count++;
+			}
+			else
+			{
+				System.out.println("Metadescription : " + mDescription);
+			}
+		}
+		
+		System.out.println("_____________________________________________________________________________________________");
+		
+		System.out.println("Number of Meta Tags Without description : " + count);
+		
+		System.out.println("_____________________________________________________________________________________________");
+		
+		
+		
+	}
+	
+	@Test
+	public void employeeSurvey()
+	{
+		String url = "https://www.empuls.io/employee-survey-tool";
+		
+		driver.get(url);
+		
+		System.out.println("Page link : " + url);
+		
+		driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
+		
+		List<WebElement> metaTag = driver.findElements(By.tagName("meta"));
+		
+		System.out.println("Total Meta Tags : " + metaTag.size());
+		
+		int count = 0;
+		
+		String mDescription;
+		
+		for(WebElement metadescription : metaTag)
+		{
+			mDescription = metadescription.getAttribute("content");
+			
+			if(mDescription == null || mDescription.isEmpty())
+			{
+				System.out.println("Metadescription : " + mDescription);
+			
+				count++;
+			}
+			else
+			{
+				System.out.println("Metadescription : " + mDescription);
+			}
+		}
+		
+		System.out.println("_____________________________________________________________________________________________");
+		
+		System.out.println("Number of Meta Tags Without description : " + count);
+		
+		System.out.println("_____________________________________________________________________________________________");
+		
+		
+		
+	} 
 	
 	@AfterTest
 	public void closeBrowser()

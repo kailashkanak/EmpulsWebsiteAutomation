@@ -2,6 +2,8 @@ package navigatingDemo;
 
 
 
+import java.net.URL;
+import java.net.URLConnection;
 import java.time.Duration;
 import java.util.Date;
 import java.util.List;
@@ -61,39 +63,19 @@ public class ImagesCount
 			System.out.println("_____________________________________________________________________________________________________________________________________________________");
 			try
 			{
-			String imagelink = Link.getAttribute("src");
-			System.out.println("Image source : " + imagelink);
-			//System.out.println("Size of the image : " + Link.getSize());
-			//System.out.println("Image size : " + Link.getSize());
-			Dimension d = Link.getSize();
-			
-			int width=d.getWidth();
-			int height=d.getHeight();
-			
-			if(width == 0 || height== 0)
-			{
-				System.out.println(imagelink + "  ---->  doesn't have height and width" );
+				System.out.println("Image Source : " + Link.getAttribute("src"));
+				
+				URLConnection urlConnection = new URL(Link.getAttribute("src")).openConnection();
+				int size = urlConnection.getContentLength();
+				
+				System.out.println("Image size : " + size + " Bytes");
+				
 			}
-			else
-			{
-			System.out.println("Height = "+ height);
-			System.out.println("Width = " + width);
 			
-			int totalpixels = height*width;
-			System.out.println("Total Pixels = " + totalpixels);
-			int sizeInBytes = totalpixels*3; // 1 pixel takes 3 bytes memory, so multiplying total pixels with 3 to get actual bytes.
-			// converting image size into KB
-			//System.out.println("Total bytes = " + sizeInBytes);
-			
-			int actual_size = sizeInBytes/1024;
-			
-			System.out.println("Size of the image : " + actual_size + "KB");
-			}
-			}
 			catch(Exception e)
 			{
 				System.out.println(e);
-			}
+			} 
 			
 			System.out.println("_____________________________________________________________________________________________________________________________________________________");
 		

@@ -1,5 +1,8 @@
 package navigatingDemo;
 
+import java.io.FileWriter;
+import java.net.URL;
+import java.net.URLConnection;
 import java.time.Duration;
 import java.util.ArrayList;
 import java.util.Date;
@@ -12,6 +15,8 @@ import org.openqa.selenium.chrome.ChromeDriver;
 import org.testng.annotations.AfterTest;
 import org.testng.annotations.BeforeTest;
 import org.testng.annotations.Test;
+
+import com.opencsv.CSVWriter;
 
 public class ImageAltText {
 	WebDriver driver;
@@ -92,6 +97,83 @@ public class ImageAltText {
 		{
 			System.out.println(mylist);
 		}
+		
+	}
+	
+	@Test
+	public void salesCommissionManagement()
+	{
+		String url = "https://www.empuls.io";
+		
+		driver.get(url);
+		
+		driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
+		
+		System.out.println("Page Link : " + url);
+		
+		System.out.println("Page Title : " + driver.getTitle());
+		
+		List<WebElement> countOfImages = driver.findElements(By.tagName("img"));
+		
+		System.out.println("Count of Images on this page : " + countOfImages.size());
+		
+		try 
+		{
+			
+			
+			FileWriter outputfile = new FileWriter("/Users/kailash.k/Documents/EmpulsHomePageTestReport.csv");
+			
+			CSVWriter writer = new CSVWriter(outputfile);
+			
+			//Adding header to CSV file
+			
+			String[] header = {"S_No","Page Link","Image source","Image Size in Bytes","Image Alt Text"};
+			
+			writer.writeNext(header);
+			
+			//adding data to CSV file
+			
+			int sno = 1;
+			
+			for(WebElement record : countOfImages)
+			{
+				
+				URLConnection urlConnection = new URL(record.getAttribute("src")).openConnection();
+				
+				int size = urlConnection.getContentLength();
+				
+				String altText = record.getAttribute("alt");
+				
+				if(altText==null || altText.isEmpty())
+				{
+					altText = "No alt text";
+				}
+				else
+				{
+					System.out.println("Alt Text = "+ altText);
+				}
+			
+				String imgSrc = record.getAttribute("src");
+				
+				String id = Integer.toString(sno);
+				
+				String imgSize = Integer.toString(size);
+				
+				String[] data1 = {id, url, imgSrc, imgSize, altText};
+				
+				writer.writeNext(data1);
+				
+				sno++;
+				
+			}
+			
+			writer.close();
+		}
+		catch(Exception e)
+		{
+			System.out.println(e);
+		}
+		
 		
 	}
 	@AfterTest
